@@ -1,0 +1,7 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '11.0'
+use_frameworks!
+
+target "PhotoMosaic" do
+    pod 'UIScreenExtension', :git => 'https://github.com/marchv/UIScreenExtension'
+end
