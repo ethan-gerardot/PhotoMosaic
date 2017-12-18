@@ -64,8 +64,8 @@ class EditImageViewController: UIViewController {
     }
     
     private func updateImage(with outputImage: CIImage) {
-        let imageRef = context.createCGImage(outputImage, from: outputImage.extent)
-        item.image = UIImage(cgImage: imageRef!)
+        let imageRef = context.createCGImage(outputImage, from: outputImage.extent)!
+        item.image = UIImage.init(cgImage: imageRef, scale: item.image.scale, orientation: item.image.imageOrientation)
         imageView.image = item.image
     }
     
