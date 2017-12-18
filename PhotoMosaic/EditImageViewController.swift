@@ -36,22 +36,25 @@ class EditImageViewController: UIViewController {
         
         imageView.image = item.image
         
-        let ciImage = CIImage(cgImage: item.image.cgImage!)
         context = CIContext(options: nil)
-        contrastFilter = CIFilter(name: "CIColorControls")
-        contrastFilter.setValue(ciImage, forKey: "inputImage")
         brightnessFilter = CIFilter(name: "CIColorControls")
-        brightnessFilter.setValue(ciImage, forKey: "inputImage")
+        contrastFilter = CIFilter(name: "CIColorControls")
+        brightnessFilter.setValue(0, forKey: "inputBrightness")
+        contrastFilter.setValue(1, forKey: "inputContrast")
+        updateInputImage(for: brightnessFilter)
+        updateInputImage(for: contrastFilter)
     }
     
     @IBAction func brightnessSliderValueChanged(_ sender: UISlider) {
         brightnessFilter.setValue(NSNumber(value: sender.value), forKey: "inputBrightness")
         updateImage(with: brightnessFilter.outputImage!)
+        updateInputImage(for: contrastFilter)
     }
     
     @IBAction func contrastSliderValueChanged(_ sender: UISlider) {
         contrastFilter.setValue(NSNumber(value: sender.value), forKey: "inputContrast")
         updateImage(with: contrastFilter.outputImage!)
+        updateInputImage(for: brightnessFilter)
     }
     
     @IBAction func cancelAction() {
@@ -67,6 +70,11 @@ class EditImageViewController: UIViewController {
         let imageRef = context.createCGImage(outputImage, from: outputImage.extent)!
         item.image = UIImage.init(cgImage: imageRef, scale: item.image.scale, orientation: item.image.imageOrientation)
         imageView.image = item.image
+    }
+    
+    private func updateInputImage(for filter: CIFilter) {
+        let ciImage = CIImage(cgImage: item.image.cgImage!)
+        filter.setValue(ciImage, forKey: "inputImage")
     }
     
 }

@@ -35,7 +35,11 @@ class CollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
             isSettingNewModel = false
         }
     }
-    var editAction: (()->())?
+    var editAction: (()->())? {
+        didSet {
+            editButtonView.isHidden = editAction == nil
+        }
+    }
     
     private var isSettingNewModel: Bool = false
     var isScaleEnabled: Bool = false {
@@ -47,6 +51,7 @@ class CollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
     }
     
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var editButtonView: UIView!
     private var imageView = UIImageView()
     
     override func awakeFromNib() {
@@ -54,6 +59,8 @@ class CollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         
         scrollView.addSubview(imageView)
         scrollView.delegate = self
+        editAction = nil
+        editButtonView.roundCorners([.bottomLeft , .bottomRight])
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

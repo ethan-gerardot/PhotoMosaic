@@ -39,6 +39,12 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             collectionView.reloadData()
         }
     }
+    var isEditCellsEnabled: Bool! {
+        didSet {
+            updateLongPressGestureMinimumDuration()
+            collectionView.reloadData()
+        }
+    }
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -48,7 +54,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         super.viewDidLoad()
         
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        longPressGesture.minimumPressDuration = 0.05
+        updateLongPressGestureMinimumDuration()
         collectionView.addGestureRecognizer(longPressGesture)
     }
     
@@ -71,7 +77,7 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
         cell.model = data[indexPath.row]
-        cell.editAction = {
+        cell.editAction = !isEditCellsEnabled ? nil : {
             let image = self.data[indexPath.row].image
             self.delegate?.didSelectImage(image, at: indexPath)
         }
@@ -91,6 +97,18 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let itemToMove = data.remove(at: sourceIndexPath.row)
         data.insert(itemToMove, at: destinationIndexPath.row)
+    }
+    
+    func updateLongPressGestureMinimumDuration() {
+        // If the edit button is showing on the cells, then the long press needs
+        // to be longer to avoid stealing the touch event. Otherwise, we want the
+        // long press to be as quick as possible so it's easy to drag and move
+        // cells.
+        if let isEditCellsEnabled = isEditCellsEnabled, isEditCellsEnabled {
+            longPressGesture.minimumPressDuration = 0.15
+        } else {
+            longPressGesture.minimumPressDuration = 0.05
+        }
     }
     
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {

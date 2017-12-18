@@ -35,6 +35,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         updateIsScaleCanvasEnabled(true)
         updateIsMoveCellsEnabled(true)
         updateIsScaleCellsEnabled(true)
+        updateIsEditCellsEnabled(true)
         updateCanvasSizeAction()
         
         if PHPhotoLibrary.authorizationStatus() != .authorized {
@@ -84,6 +85,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         scrollView.maximumZoomScale = enabled ? 10.0 : scrollView.zoomScale
     }
     
+    @IBAction func resetCanvasZoomAction() {
+        let currentMinZoomScale = scrollView.minimumZoomScale
+        let currentMaxZoomScale = scrollView.maximumZoomScale
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 1.0
+        scrollView.zoomScale = 1.0
+        scrollView.minimumZoomScale = currentMinZoomScale
+        scrollView.maximumZoomScale = currentMaxZoomScale
+    }
+    
     @IBAction func moveCellsSwitchAction(_ sender: UISwitch) {
         updateIsMoveCellsEnabled(sender.isOn)
     }
@@ -100,14 +111,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         collectionViewController.isScaleCellsEnabled = enabled
     }
     
-    @IBAction func resetCanvasZoomAction() {
-        let currentMinZoomScale = scrollView.minimumZoomScale
-        let currentMaxZoomScale = scrollView.maximumZoomScale
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 1.0
-        scrollView.zoomScale = 1.0
-        scrollView.minimumZoomScale = currentMinZoomScale
-        scrollView.maximumZoomScale = currentMaxZoomScale
+    @IBAction func editCellsSwichAction(_ sender: UISwitch) {
+        updateIsEditCellsEnabled(sender.isOn)
+    }
+    
+    func updateIsEditCellsEnabled(_ enabled: Bool) {
+        collectionViewController.isEditCellsEnabled = enabled
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

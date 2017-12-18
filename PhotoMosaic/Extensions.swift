@@ -53,3 +53,18 @@ extension UIImage {
     }
     
 }
+
+extension UIView {
+    
+    func roundCorners(_ corners: UIRectCorner, radius: CGFloat = 8.0) {
+        let maskShape = CAShapeLayer()
+        maskShape.bounds = frame
+        maskShape.position = center
+        
+        let cornerRadii = CGSize(width: radius, height: radius)
+        maskShape.path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: cornerRadii).cgPath
+        
+        layer.mask = maskShape
+    }
+    
+}
