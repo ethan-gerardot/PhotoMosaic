@@ -64,9 +64,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     @IBAction func shareAction() {
+        // Hide the edit buttons on the cells and reset the canvas to its actual
+        // size before getting the image.
+        let isEditCellsEnabled = collectionViewController.isEditCellsEnabled ?? false
+        updateIsEditCellsEnabled(false)
+        let zoomScale = scrollView.zoomScale
+        let contentOffset = scrollView.contentOffset
         resetCanvasZoomAction()
+        
         let image = UIImage(view: collectionViewController.collectionView)
         print("image to share: \(image)")
+        
+        // Restore the edit buttons and canvas size (as needed).
+        updateIsEditCellsEnabled(isEditCellsEnabled)
+        scrollView.zoomScale = zoomScale
+        scrollView.contentOffset = contentOffset
+        
+        // Display the activity VC so the user can share / save the image.
         let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         modalPresentationStyle = .popover
         if let popoverPresentationController = activityViewController.popoverPresentationController {
