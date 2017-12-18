@@ -35,6 +35,7 @@ class CollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
             isSettingNewModel = false
         }
     }
+    var editAction: (()->())?
     
     private var isSettingNewModel: Bool = false
     var isScaleEnabled: Bool = false {
@@ -71,4 +72,7 @@ class CollectionViewCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
     
+    @IBAction func editButtonAction() {
+        editAction?()
+    }
 }

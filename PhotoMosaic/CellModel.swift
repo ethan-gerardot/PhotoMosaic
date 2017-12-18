@@ -15,13 +15,19 @@ class CellModel {
     var zoomScale: CGFloat?
     var contentOffset: CGPoint?
     
+    convenience init(oldModel: CellModel, newImage: UIImage) {
+        self.init(image: newImage, contentSize: oldModel.contentSize, zoomScale: oldModel.zoomScale, contentOffset: oldModel.contentOffset)
+    }
+    
     convenience init(image: UIImage, cellSize: CGSize) {
         self.init(image: image, contentSize: image.contentSize(for: cellSize))
     }
     
-    init(image: UIImage, contentSize: CGSize) {
+    init(image: UIImage, contentSize: CGSize, zoomScale: CGFloat? = nil, contentOffset: CGPoint? = nil) {
         self.image = image
         self.contentSize = contentSize
+        self.zoomScale = zoomScale
+        self.contentOffset = contentOffset
     }
     
     var description: String {

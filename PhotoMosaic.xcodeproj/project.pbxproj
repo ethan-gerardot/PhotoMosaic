@@ -16,6 +16,7 @@
 		CA1356701FE60FE900F6F66E /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA13566F1FE60FE900F6F66E /* CollectionViewController.swift */; };
 		CA1356721FE6100000F6F66E /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1356711FE6100000F6F66E /* CollectionViewCell.swift */; };
 		CA1356761FE635C700F6F66E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1356751FE635C700F6F66E /* Extensions.swift */; };
+		CA36CFF61FE776A600DBC8F0 /* EditImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA36CFF51FE776A600DBC8F0 /* EditImageViewController.swift */; };
 		CA884F771FE71B5600AF10F8 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA884F761FE71B5600AF10F8 /* CellModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		CA1356741FE61E5E00F6F66E /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		CA1356751FE635C700F6F66E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CA1356781FE639F300F6F66E /* UIScreenExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UIScreenExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA36CFF51FE776A600DBC8F0 /* EditImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditImageViewController.swift; sourceTree = "<group>"; };
 		CA884F761FE71B5600AF10F8 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +82,7 @@
 				CA13566F1FE60FE900F6F66E /* CollectionViewController.swift */,
 				CA884F761FE71B5600AF10F8 /* CellModel.swift */,
 				CA1356711FE6100000F6F66E /* CollectionViewCell.swift */,
+				CA36CFF51FE776A600DBC8F0 /* EditImageViewController.swift */,
 				CA1356751FE635C700F6F66E /* Extensions.swift */,
 			);
 			path = PhotoMosaic;
@@ -230,6 +233,7 @@
 				CA1356761FE635C700F6F66E /* Extensions.swift in Sources */,
 				CA1356701FE60FE900F6F66E /* CollectionViewController.swift in Sources */,
 				CA1356601FE5EC3500F6F66E /* ViewController.swift in Sources */,
+				CA36CFF61FE776A600DBC8F0 /* EditImageViewController.swift in Sources */,
 				CA1356721FE6100000F6F66E /* CollectionViewCell.swift in Sources */,
 				CA13565E1FE5EC3500F6F66E /* AppDelegate.swift in Sources */,
 				CA884F771FE71B5600AF10F8 /* CellModel.swift in Sources */,

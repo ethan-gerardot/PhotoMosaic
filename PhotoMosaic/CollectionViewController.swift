@@ -10,7 +10,15 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
+protocol CollectionViewControllerDelegate: class {
+    
+    func didSelectImage(_ image: UIImage, at indexPath: IndexPath)
+    
+}
+
 class CollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    weak var delegate: CollectionViewControllerDelegate?
     
     var data: [CellModel] = []
     var cellSize: CGSize = .zero {
@@ -42,11 +50,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.05
         collectionView.addGestureRecognizer(longPressGesture)
-        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
     }
     
     func addData(for image: UIImage) {
         data.append(CellModel(image: image, cellSize: cellSize))
+    }
+    
+    func updateData(at indexPath: IndexPath, with image: UIImage) {
+        data[indexPath.row] = CellModel(oldModel: data[indexPath.row], newImage: image)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -60,6 +71,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
         cell.model = data[indexPath.row]
+        cell.editAction = {
+            let image = self.data[indexPath.row].image
+            self.delegate?.didSelectImage(image, at: indexPath)
+        }
         cell.isScaleEnabled = isScaleCellsEnabled
         return cell
     }
@@ -95,14 +110,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         default:
             collectionView.cancelInteractiveMovement()
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

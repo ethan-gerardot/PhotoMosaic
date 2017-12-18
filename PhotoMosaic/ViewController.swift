@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import UIScreenExtension
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, CollectionViewControllerDelegate, EditImageViewControllerDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var containerView: UIView!
@@ -129,8 +129,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let cvc = segue.destination as? CollectionViewController {
-            collectionViewController = cvc
+        if let collectionVC = segue.destination as? CollectionViewController {
+            collectionViewController = collectionVC
+            collectionViewController.delegate = self
         }
     }
     
@@ -143,6 +144,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         imagePickerController.dismiss(animated: true)
+        collectionViewController.collectionView.reloadData()
+    }
+    
+    func didSelectImage(_ image: UIImage, at indexPath: IndexPath) {
+        let editImageVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditImageViewController") as! EditImageViewController
+        editImageVC.item = (image: image, indexPath: indexPath)
+        editImageVC.delegate = self
+        modalPresentationStyle = .fullScreen
+        modalTransitionStyle = .coverVertical
+        present(editImageVC, animated: true)
+    }
+    
+    func didFinishEditingImage(_ image: UIImage, at indexPath: IndexPath) {
+        collectionViewController.updateData(at: indexPath, with: image)
         collectionViewController.collectionView.reloadData()
     }
     
