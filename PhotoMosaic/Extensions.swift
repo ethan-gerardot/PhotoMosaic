@@ -31,4 +31,25 @@ extension UIImage {
         self.init(cgImage: image!.cgImage!)
     }
     
+    func contentSize(for scrollViewSize: CGSize) -> CGSize {
+        let aspectRatio = size.width / size.height
+        
+        var width = scrollViewSize.width
+        var height = width / aspectRatio
+        
+        if (height > scrollViewSize.height) {
+            height = scrollViewSize.height;
+            width = height * aspectRatio;
+        }
+        
+        let scale: CGFloat
+        if size.width > size.height {
+            scale = size.width / size.height
+        } else {
+            scale = size.height / size.width
+        }
+        
+        return CGSize(width: width * scale, height: height * scale);
+    }
+    
 }

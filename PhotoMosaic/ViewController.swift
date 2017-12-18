@@ -50,7 +50,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func setupPicker() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary), let mediaTypes = UIImagePickerController.availableMediaTypes(for: .savedPhotosAlbum) {
-            print("media types: \(mediaTypes)")
             imagePickerController.sourceType = .photoLibrary
             imagePickerController.mediaTypes = [mediaTypes.first!]
             imagePickerController.delegate = self
@@ -66,7 +65,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func shareAction() {
         resetCanvasZoomAction()
         let image = UIImage(view: collectionViewController.collectionView)
-        print(image)
+        print("image to share: \(image)")
         let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         modalPresentationStyle = .popover
         if let popoverPresentationController = activityViewController.popoverPresentationController {
@@ -117,7 +116,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func updateCanvasSizeAction() {
         let ppi = CGFloat(UIScreen.pointsPerInch!)
-        print(ppi)
         
         containerViewWidth.constant = CGFloat.from(widthTextField.text) * ppi
         containerViewHeight.constant = CGFloat.from(heightTextField.text) * ppi
@@ -137,9 +135,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("info: \(info)")
+        print("info for selected media:\n\(info)")
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            collectionViewController.data.append(CellModel(image: image))
+            collectionViewController.addData(for: image)
         }
     }
     

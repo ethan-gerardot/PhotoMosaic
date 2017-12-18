@@ -78,9 +78,9 @@
 				CA1356661FE5EC3500F6F66E /* LaunchScreen.storyboard */,
 				CA1356691FE5EC3500F6F66E /* Info.plist */,
 				CA13566F1FE60FE900F6F66E /* CollectionViewController.swift */,
+				CA884F761FE71B5600AF10F8 /* CellModel.swift */,
 				CA1356711FE6100000F6F66E /* CollectionViewCell.swift */,
 				CA1356751FE635C700F6F66E /* Extensions.swift */,
-				CA884F761FE71B5600AF10F8 /* CellModel.swift */,
 			);
 			path = PhotoMosaic;
 			sourceTree = "<group>";

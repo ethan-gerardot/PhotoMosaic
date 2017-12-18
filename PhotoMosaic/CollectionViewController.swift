@@ -15,6 +15,13 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     var data: [CellModel] = []
     var cellSize: CGSize = .zero {
         didSet {
+            var newData: [CellModel] = []
+            for item in data {
+                let image = item.image
+                newData.append(CellModel(image: image, cellSize: cellSize))
+            }
+            data = newData
+            
             collectionView.collectionViewLayout.invalidateLayout()
             collectionView.reloadData()
         }
@@ -29,12 +36,6 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     var longPressGesture: UILongPressGestureRecognizer!
     
-    override var isEditing: Bool {
-        didSet {
-            longPressGesture.isEnabled = isEditing
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +43,10 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
         longPressGesture.minimumPressDuration = 0.05
         collectionView.addGestureRecognizer(longPressGesture)
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
+    }
+    
+    func addData(for image: UIImage) {
+        data.append(CellModel(image: image, cellSize: cellSize))
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -54,10 +59,14 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-        print("cell for item at row: \(indexPath.row)")
         cell.model = data[indexPath.row]
         cell.isScaleEnabled = isScaleCellsEnabled
         return cell
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        longPressGesture.isEnabled = editing
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
