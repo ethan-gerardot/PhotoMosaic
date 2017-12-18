@@ -182,10 +182,9 @@ class CollectionViewController: UIViewController, UICollectionViewDelegate, UICo
             movingView.removeFromSuperview()
             movingView = nil
             
-            let itemToMove = data.remove(at: sourceIndexPath.row)
-            let destItem = data.remove(at: destinationIndexPath.row)
-            data.insert(itemToMove, at: destinationIndexPath.row)
-            data.insert(destItem, at: sourceIndexPath.row)
+            let sourceItem = data[sourceIndexPath.row]
+            data[sourceIndexPath.row] = data[destinationIndexPath.row]
+            data[destinationIndexPath.row] = sourceItem
             
             collectionView.performBatchUpdates({
                 collectionView.moveItem(at: sourceIndexPath, to: destinationIndexPath)
