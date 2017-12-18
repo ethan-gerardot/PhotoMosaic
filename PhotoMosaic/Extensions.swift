@@ -24,7 +24,7 @@ extension CGFloat {
 extension UIImage {
     
     convenience init(view: UIView) {
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.isOpaque, UIScreen.main.scale)
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.isOpaque, 3.0)
         view.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

@@ -47,6 +47,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         } else {
             setupPicker()
         }
+        
+        collectionViewController.data = []
+        let images = ImageLoader.loadDefaultImages()
+        for image in images {
+            collectionViewController.addData(for: image)
+        }
+        collectionViewController.collectionView.reloadData()
     }
     
     func setupPicker() {
